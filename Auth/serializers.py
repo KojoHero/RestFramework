@@ -2,8 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-
-from .models import Registration
+from .models import Registration, BlogPost, Category, TodoList
 
 
 class RegSerializers(serializers.ModelSerializer):
@@ -14,8 +13,7 @@ class RegSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Registration
-        fields = ('__all__')
-
+        fields = '__all__'
 
     def validate(self, attrs):
         if attrs['password'] != attrs['c_password']:
@@ -36,3 +34,23 @@ class LogSerializers(serializers.ModelSerializer):
     class Meta:
         model = Registration
         fields = ('username', 'password')
+
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlogPost
+        fields = '__all__'
+
+
+class CatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class TodoListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TodoList
+        fields = '__all__'
+
+
