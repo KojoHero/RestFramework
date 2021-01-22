@@ -1,7 +1,10 @@
+from time import strftime
+
 from django.db import models
 
 # Create your models here.
 from django.utils import timezone
+# from django.utils.datetime_safe import strftime
 
 
 class Registration(models.Model):
@@ -18,7 +21,7 @@ class BlogPost(models.Model):
     author = models.CharField(max_length=100, blank=True)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=1500)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField(default=strftime("%Y-%m-%d"))
     image = models.ImageField(blank=True, upload_to='images')
 
     def __str__(self):
@@ -39,8 +42,8 @@ class Category(models.Model):
 class TodoList(models.Model):
     title = models.CharField(max_length=250)
     content = models.TextField(blank=True)
-    created = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    due_date = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    created = models.DateField(auto_now_add=True)
+    due_date = models.DateField(default=strftime("%Y-%m-%d"))
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default="general")
 
     class Meta:

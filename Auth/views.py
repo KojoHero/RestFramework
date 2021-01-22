@@ -1,5 +1,5 @@
 from django.contrib.auth import login
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import AllowAny
 from knox.views import LoginView as KnoxLoginView
@@ -28,7 +28,8 @@ class LoginAPI(KnoxLoginView):
 class BlogView(generics.ListCreateAPIView):
     queryset = BlogPost.objects.all()
     serializer_class = BlogSerializer
-
+    search_fields = ['author', 'title']
+    filter_backends = (filters.SearchFilter,)
 
 
 class CatView(generics.ListCreateAPIView):
